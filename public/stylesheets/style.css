@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins';
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+/* VARIABLES */
+:root{
+  --primary-color: #0065FF;
+  --secondary-color: #8C34F6;
+  --third-color: #FE0196;
+  --fourth-color: #14D39D;
+  --fifth-color: #8c61ff;
+
+}
+
+/* COLOR CLASSESS */
+.text-primary{
+  color: var(--primary-color);
+}
+.text-secondary{
+  color: var(--secondary-color);
+}
+.text-third{
+  color: var(--third-color);
+}
+.text-fourth{
+  color: var(--fourth-color);
+}
+.text-fifth{
+  color: var(--fifth-color);
+}
+
+/* BACKGROUND CLASSES */
+.bg-primary{
+  background-color: var(--primary-color);
+}
+.bg-secondary{
+  background-color: var(--secondary-color);
+}
+.bg-third{
+  background-color: var(--third-color);
+}
+.bg-fourth{
+  background-color: var(--fourth-color);
+}
+.bg-fifth{
+  background-color: var(--fifth-color);
+}
