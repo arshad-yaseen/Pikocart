@@ -1,0 +1,35 @@
+<style>
+    .categories-section{
+        display: none !important;
+    }
+    .header-search{
+        display: none !important;
+    }
+</style>
+
+
+<section class="h-screen w-full flex flex-col items-center">
+    <img class="h-36 -mt-4 wt-max-width-full wt-horizontal-center wt-vertical-center carousel-image wt-rounded" alt="Party Popper Emoji vector  eps jpg png svg image 1" data-carousel-first-image="" src="https://i.etsystatic.com/16421349/r/il/1d4b0f/2983712461/il_794xN.2983712461_6kwo.jpg" srcset="https://i.etsystatic.com/16421349/r/il/1d4b0f/2983712461/il_794xN.2983712461_6kwo.jpg 1x, https://i.etsystatic.com/16421349/r/il/1d4b0f/2983712461/il_1588xN.2983712461_6kwo.jpg 2x" fetchpriority="high" data-original-image-width="3000" data-src-zoom-image="https://i.etsystatic.com/16421349/r/il/1d4b0f/2983712461/il_fullxfull.2983712461_6kwo.jpg" data-index="0">
+    <h1 class="text-sm" >Hooray,Your Order Has Been Placed</h1>
+    <h1 class="text-3xl mt-2" >Thankyou for Your Order <span class="text-3xl capitalize" >{{order.deliveryDetails.name}}</span> !</h1>
+
+    <div class="w-full h-60 absolute bottom-6 flex">
+        <h1 class="text-sm border-b-2 border-slate-100 h-6 ml-60 mt-4 w-40" ><span class="text-sm block" >Delivering To</span><span class="text-xs font-medium inline-block mt-3 width-400-px leading-relaxed capitalize" >
+
+            {{order.deliveryDetails.address}}, {{order.deliveryDetails.landmark}} |  {{order.deliveryDetails.city}} - {{order.deliveryDetails.pincode}} <br> {{order.deliveryDetails.state}} - India <br> Mobile: {{order.deliveryDetails.mobile}}
+
+        </span></h1>
+        <h1 class="text-sm border-b-2 border-slate-100 h-6 ml-52 mt-4 float-right w-36" ><span class="text-sm block" >Payment Details</span><span class="text-xs font-medium inline-block mt-3 width-400-px leading-relaxed" >
+            Total : <span class="text-xs font-sans ml-2" >₹{{order.totalAmount}}</span> <br>
+            <span class="text-xs mt-1 inline-block" >
+                {{#if COD}}
+                Cash on Delivery
+                {{else}}
+                Online Payment Successful
+                {{/if}}
+            </span> <br>
+            <a href="/my-orders" class="bg-primary py-1 px-3 rounded-sm mt-3 text-white inline-block">Go to Orders</a>
+        </span></h1>
+    </div>
+
+</section>

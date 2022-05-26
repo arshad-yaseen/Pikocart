@@ -1,0 +1,153 @@
+<style>
+    .categories-section{
+        display: none !important;
+    }
+    .header-search{
+        display: none !important;
+    }
+</style>
+
+<div class="cart-wrapper w-full height-91 flex lg:flex-row flex-col">
+    <section class="cart-section width-70 h-full flex flex-col items-center px-8 overflow-y-scroll overflow-x-hidden pb-4" >
+        <section class=" w-full border-b-2 border-slate-100 flex items-center relative py-3">
+            <h1 class="text-xs ml-8 text-slate-800" >Shopping Cart</h1>
+            <h1 class="text-xs absolute right-8 text-slate-800" >{{cartCount}} Items</h1>
+        </section>
+        {{#if isCartItemsZero}}
+        <img src="/images/empty-cart.webp" class="h-24 mt-12 opacity-30">
+        <p class="text-md mt-4 text-slate-400 text-center" >Your cart is empty</p>
+        {{/if}}
+        {{#each cartProducts}}
+        <div class="cart-product-item min-height-22 mt-6 w-full  flex py-1 relative cursor-pointer ">
+            <div class="cart-image-wrapper h-full w-28 rounded-md ml-2 flex items-center justify-center ">
+                <img src="/product-images/{{this.product._id}}.webp" class="h-20 w-auto rounded-md">
+            </div>
+            <div class="h-full w-64  flex flex-col">
+                <h1 class="text-xs ml-6 mt-2 w-76 capitalize" >{{this.product.description}}</h1>
+                <p class="small-text mt-2 ml-6 w-44 capitalize text-slate-400" >color <span class="mr-2 small-text ml-1 text-slate-600" >{{this.product.color}}</span>
+                
+                {{#if this.product.size}}
+                Size <span class="small-text ml-1 text-slate-600 uppercase" >{{this.product.size}}</span
+                {{else}}
+                 <span class="small-text ml-1 text-slate-600 font-medium" >assured</span
+                {{/if}}
+
+
+                 </p>
+                <a onclick="deleteFromCart('{{this._id}}','{{this.product._id}}')" class="block small-text lowercase font-medium mt-2 text-red-500 hover:underline hover:text-red-500">remove</a>
+            </div>
+            <div class="flex flex-col absolute right-0 w-28 h-full">
+                <div class="w-full h-1/2 flex pt-2 justify-center">
+                     <h3 class="text-sm font-sans text-black" >₹{{this.product.dealprice}}</h3>
+                </div>
+                <div class="w-full h-1/2 flex items-start">
+
+                <form class="quantity-form" >
+                    <div onclick="incrementQuantity('{{this._id}}','{{this.product._id}}',-1,'{{this.product.dealprice}}',{{this.quantity}},{{this.product.dealprice}},{{this.product.maxprice}})" class="value-button text-xs" id="decrease-button" value="Decrease Value">-</div>
+                    <p class="text-xs number" id="{{this.product._id}}" >{{this.quantity}}</p>
+                    <div onclick="incrementQuantity('{{this._id}}','{{this.product._id}}',1,'{{this.product.dealprice}}',{{this.quantity}},{{this.product.dealprice}},{{this.product.maxprice}})" class="value-button text-xs" id="increase" value="Increase Value">+</div>
+                </form>
+                </div>
+            </div>
+           
+        </div>
+        {{/each}}
+    </section>
+    <section class="width-30 h-full flex flex-col items-center border-l-2 border-slate-100" >
+        
+        <div class="w-full h-24 flex flex-col justify-center px-16 items-center border-b-2 border-slate-100">
+            <label for="text" class="text-xs mb-2" >Your Coupon Code</label>
+            <input type="text" name="couponcode" placeholder="Your Coupon Code Here" class="w-full rounded-md ring-1 ring-offset-1 ring-slate-300 small-text font-medium py-1 pl-4 mt-1 placeholder:text-slate-200 focus:outline-none focus:placeholder:text-slate-500 focus:ring-slate-500 hover:ring-slate-400">
+        </div>
+        <div class=" w-full h-80 pl-8">
+            <p class=" mt-3 text-xs font-medium text-slate-500" >Subtotal : <span class="text-xs font-medium font-sans ml-1 text-black" >₹
+                {{#if subTotal}}
+                {{subTotal}}
+                {{else}}
+                0.000
+                {{/if}}
+            </span></p>
+            <p class=" mt-3 text-xs font-medium text-slate-500" >Tax(1%) : <span class="text-xs font-medium font-sans ml-1 text-black" >₹
+                {{#if tax}}
+                {{tax}}
+                {{else}}
+                0.000
+                {{/if}}
+            </span></p>
+            <p class=" mt-3 text-xs font-medium text-slate-500 mb-8" >Shipping : <span class="text-xs font-medium font-sans ml-1 text-fourth" >FREE</span></p>
+            <p class=" mt-2 text-sm font-bold text-slate-900 mb-4" >Total : <span class="text-sm font-bold font-sans ml-1 text-black" id="total" >₹{{Total}}</span></p>
+
+            <a href="/place-order" class="py-1 px-4 rounded-xl text-blue-500 ring-2 ring-offset-2 ring-blue-500 text-sm hover:bg-blue-500 hover:text-white transition-colors" >Checkout</a>
+
+        </div>
+    </section>
+</div>
+
+<script>
+    let totalElem = document.getElementById('total');
+    if(totalElem.innerText == '₹NaN'){
+        totalElem.innerText='0.000'
+    }
+
+    function incrementQuantity(cartId,proId,count,price,quantity,dealprice,maxprice){
+
+        let quantityElem = document.getElementById(proId);
+        let quantityValue = parseInt(document.getElementById(proId).innerText);
+        
+        let totalElem = document.getElementById('total');
+        let TotalValue = document.getElementById('total').innerText
+
+        var productPrice = parseInt(price);
+        var Total = TotalValue.replace(/,/g, '')
+        var TotalPrice = parseInt(Total.replace('₹', ''))
+
+        $.ajax({
+        url: '/increment-product-quantity',
+        data:{
+            cart: cartId,
+            product:proId,
+            count: count,
+            quantity: quantityValue
+        },
+        method:'post',
+        success:(response)=> {
+            if(response.itemRemoved){
+                alert('Item Was Removed From Cart')
+                location.reload()
+            }
+            
+            if(count == '1'){
+                quantityElem.innerText = quantityValue + 1
+                totalElem.innerText= '₹' + (TotalPrice + productPrice)
+                
+            }else{
+                quantityElem.innerText = quantityValue - 1
+                totalElem.innerText= '₹' + (TotalPrice - productPrice)
+            }
+        }
+
+    })
+    }
+
+    function deleteFromCart(cartId,prodId){
+        $.ajax({
+            url: '/remove-cart-product',
+            data:{
+                cartId: cartId,
+                proId: prodId
+            },
+            method: 'post',
+            success:(response)=> {
+                if(response.itemRemoved){
+                    location.reload()
+                }
+            }
+
+        })
+    }
+
+</script>
+
+
+
+

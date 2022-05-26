@@ -1,0 +1,28 @@
+<style>
+  .header-search{ display: none
+  !important; }
+</style>
+
+<section
+  class="height-91 w-full flex flex-wrap justify-center bg-slate-50 overflow-y-scroll"
+>
+
+{{#each products}}
+
+<div class="today-deals-card h-60 m-2 w-52 rounded-sm bg-white flex flex-col cursor-pointer">
+      <div class="w-full height-55 flex items-center justify-center rounded-t-sm relative">
+        <div class="h-4 w-12 top-0 right-0 z-50 small-text text-white flex items-center justify-center font-medium absolute offerperscard">{{this.offerpers}}%</div>
+          <img class="max-h-24 absolute" src="/product-images/{{this._id}}.webp" alt="">
+      </div>
+      <div class="w-full height-45 flex flex-col rounded-t-sm pl-6 pr-6 relative">
+        <h1 class="text-xs font-medium" >{{this.name}}</h1>
+        <p class="text-fourth text-xs font-sans mt-3" >
+₹{{this.dealprice}}  <span class="text-xs mt-4 text-slate-400 font-sans line-through" >
+₹{{this.maxprice}}</span></p>
+        <p class="small-text flex items-center mt-2.5" ><ion-icon class="text-xs flex items-center justify-center mr-1 text-yellow-500 -mt-0.5" name="star"></ion-icon> <ion-icon class="text-xs flex items-center justify-center mr-1 text-yellow-500 -mt-0.5" name="star"></ion-icon> <ion-icon class="text-xs flex items-center justify-center mr-1 text-yellow-500 -mt-0.5" name="star"></ion-icon> <ion-icon class="text-xs flex items-center justify-center mr-1 text-yellow-500 -mt-0.5" name="star-half"></ion-icon> 3.5 Ratings</p>
+      </div>
+  </div>
+
+  {{/each}}
+
+</section>

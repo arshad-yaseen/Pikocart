@@ -1,0 +1,71 @@
+$heights: 100;
+
+@for $i from 1 through $heights {
+    .height-#{$i} {
+        height: (0% + $i);
+    }
+}
+@for $i from 1 through $heights {
+    .min-height-#{$i} {
+        min-height: (0% + $i);
+    }
+}
+@for $i from 1 through $heights {
+    .max-height-#{$i} {
+        max-height: (0% + $i);
+    }
+}
+
+$widths: 100;
+
+@for $i from 1 through $widths {
+    .width-#{$i} {
+        width: (0% + $i);
+    }
+}
+@for $i from 1 through $widths {
+    .min-width-#{$i} {
+        min-width: (0% + $i);
+    }
+}
+@for $i from 1 through $widths {
+    .max-width-#{$i} {
+        max-width: (0% + $i);
+    }
+}
+
+$heightspx: 1000;
+
+@for $i from 1 through $heightspx {
+    .height-#{$i}-px {
+        height: (0px + $i);
+    }
+}
+@for $i from 1 through $heightspx {
+    .min-height-#{$i}-px {
+        min-height: (0px + $i);
+    }
+}
+@for $i from 1 through $heightspx {
+    .max-height-#{$i}-px {
+        max-height: (0px + $i);
+    }
+}
+
+$widthspx: 1000;
+
+@for $i from 1 through $widthspx {
+    .width-#{$i}-px {
+        width: (0px + $i);
+    }
+}
+@for $i from 1 through $widthspx {
+    .min-width-#{$i}-px {
+        min-width: (0px + $i);
+    }
+}
+@for $i from 1 through $widthspx {
+    .max-width-#{$i}-px {
+        max-width: (0px + $i);
+    }
+}
