@@ -7,9 +7,15 @@ module.exports = {
             callback(product._id)
         })
     },
-    getAllProducts: ()=> {
+    getSpecificNumberOfProducts: (number)=> {
         return new Promise(async(resolve,reject)=> {
-            let products =await db.get().collection(collections.PRODUCTS_COLLECTION).find().toArray()
+            let products =await db.get().collection(collections.PRODUCTS_COLLECTION).aggregate([
+
+                {
+                    $sample: { size: number }
+                }
+
+            ]).toArray()
             resolve(products)
         })
     },
@@ -39,12 +45,30 @@ module.exports = {
                     offerpers: product.offerpers,
                     highlights: product.highlights,
                     stock: product.stock,
-                    colors: product.colors,
-                    sizes: product.sizes
+                    color: product.color,
+                    size: product.size
                 }
             }).then(()=> {
                 resolve()
             })
         })
+    },
+
+    getProductsByWords:(firstWord,secondWord)=> {
+        return new Promise(async(resolve,reject)=> {
+            if(secondWord != 'nothing'){
+
+                let productsByFirstWord = await db.get().collection(collections.PRODUCTS_COLLECTION).find({description: {$regex : firstWord,'$options' : 'i'}}).toArray()
+
+                let productsBySecondWord = await db.get().collection(collections.PRODUCTS_COLLECTION).find({description: {$regex : secondWord,'$options' : 'i'}}).toArray()
+
+
+                resolve({productsByFirstWord,productsBySecondWord})
+            }else{
+                let productsByFirstWord = await db.get().collection(collections.PRODUCTS_COLLECTION).find({description: {$regex : firstWord,'$options' : 'i'}}).toArray()
+                resolve({productsByFirstWord})
+            }
+        })
     }
+
 }

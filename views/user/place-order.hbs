@@ -8,10 +8,10 @@
 </style>
 
 <section>
-    <form class=" height-91 w-full flex" id="checkout-form">
+    <form class=" height-91 w-full lg:flex lg:flex-row flex-col" id="checkout-form">
 
         {{#if orderDetails}}
-        <div class="width-65 h-full flex px-8 flex-wrap content-start">
+        <div class="place-order-sections width-65 h-full flex px-8 flex-wrap content-start">
             <div class="width-100 h-12 flex px-2 ">
                  <button type="button" class="rounded-md small-text h-6 text-white px-3 bg-primary font-medium mt-3 flex items-center" ><?xml version="1.0" encoding="UTF-8"?>
 <svg class="mr-1" width="18px" height="18px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -90,21 +90,12 @@
                 <input value="{{orderDetails.deliveryDetails.alternatephone}}" placeholder="Alternate phone (optional)" type="tel" name="alternatephone" class=" focus:outline-none hover:ring-slate-400 focus:ring-slate-500 font-medium mt-2 rounded-md ring-2 ring-slate-300 ring-offset-1 small-text py-1 pl-4 h-6 w-full ">
             </div>
             <div class="width-100 h-16 flex items-center px-2 relative">
-               <a href="/" class="text-xs font-medium flex cursor-pointer" ><?xml version="1.0" encoding="UTF-8"?>
-<svg class="mr-1" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Iconly/Bold/Arrow - Left 2</title>
-    <g id="Iconly/Bold/Arrow---Left-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Arrow---Left-2" transform="translate(7.000000, 6.000000)" fill="#000000" fill-rule="nonzero">
-            <path d="M0.369215782,4.869 C0.425718461,4.811 0.639064783,4.563 0.837798344,4.359 C2.00292255,3.076 5.04237701,0.976 6.63321968,0.335 C6.87481734,0.232 7.48563078,0.014 7.81198246,0 C8.12469557,0 8.42279591,0.072 8.70725767,0.218 C9.06186069,0.422 9.34632245,0.743 9.50219191,1.122 C9.60253288,1.385 9.75840234,2.172 9.75840234,2.186 C9.9142718,3.047 10,4.446 10,5.992 C10,7.465 9.9142718,8.807 9.78665368,9.681 C9.77204092,9.695 9.61617146,10.673 9.44568924,11.008 C9.13297613,11.62 8.52216269,12 7.86848514,12 L7.81198246,12 C7.386264,11.985 6.4909888,11.605 6.4909888,11.591 C4.98587433,10.949 2.01656113,8.952 0.823185582,7.625 C0.823185582,7.625 0.48709206,7.284 0.340964442,7.071 C0.113005358,6.765 -8.8817842e-16,6.386 -8.8817842e-16,6.007 C-8.8817842e-16,5.584 0.12761812,5.19 0.369215782,4.869"></path>
-        </g>
-    </g>
-               </svg>Back to Shopping</a>
                <button class="text-xs font-medium flex cursor-pointer absolute right-6 py-1 px-3  rounded-md ring-2 ring-offset-2 ring-green-500 hover:bg-green-500 hover:text-white text-green-500 transition-colors" >Place Order</button>
             </div>
         </div>
         {{else}}
 
-        <div class="width-65 h-full flex px-8 flex-wrap content-start">
+        <div class="place-order-sections width-65 h-full flex px-8 flex-wrap content-start">
             <div class="width-100 h-12 flex px-2 ">
                  <button type="button" class="rounded-md small-text h-6 text-white px-3 bg-primary font-medium mt-3 flex items-center" ><?xml version="1.0" encoding="UTF-8"?>
 <svg class="mr-1" width="18px" height="18px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -183,21 +174,12 @@
                 <input placeholder="Alternate phone (optional)" type="tel" name="alternatephone" class=" focus:outline-none hover:ring-slate-400 focus:ring-slate-500 font-medium mt-2 rounded-md ring-2 ring-slate-300 ring-offset-1 small-text py-1 pl-4 h-6 w-full ">
             </div>
             <div class="width-100 h-16 flex items-center px-2 relative">
-               <a href="/" class="text-xs font-medium flex cursor-pointer" ><?xml version="1.0" encoding="UTF-8"?>
-<svg class="mr-1" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Iconly/Bold/Arrow - Left 2</title>
-    <g id="Iconly/Bold/Arrow---Left-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Arrow---Left-2" transform="translate(7.000000, 6.000000)" fill="#000000" fill-rule="nonzero">
-            <path d="M0.369215782,4.869 C0.425718461,4.811 0.639064783,4.563 0.837798344,4.359 C2.00292255,3.076 5.04237701,0.976 6.63321968,0.335 C6.87481734,0.232 7.48563078,0.014 7.81198246,0 C8.12469557,0 8.42279591,0.072 8.70725767,0.218 C9.06186069,0.422 9.34632245,0.743 9.50219191,1.122 C9.60253288,1.385 9.75840234,2.172 9.75840234,2.186 C9.9142718,3.047 10,4.446 10,5.992 C10,7.465 9.9142718,8.807 9.78665368,9.681 C9.77204092,9.695 9.61617146,10.673 9.44568924,11.008 C9.13297613,11.62 8.52216269,12 7.86848514,12 L7.81198246,12 C7.386264,11.985 6.4909888,11.605 6.4909888,11.591 C4.98587433,10.949 2.01656113,8.952 0.823185582,7.625 C0.823185582,7.625 0.48709206,7.284 0.340964442,7.071 C0.113005358,6.765 -8.8817842e-16,6.386 -8.8817842e-16,6.007 C-8.8817842e-16,5.584 0.12761812,5.19 0.369215782,4.869"></path>
-        </g>
-    </g>
-               </svg>Back to Shopping</a>
                <button class="text-xs font-medium flex cursor-pointer absolute right-6 py-1 px-3  rounded-md ring-2 ring-offset-2 ring-green-500 hover:bg-green-500 hover:text-white text-green-500 transition-colors" >Place Order</button>
             </div>
         </div>
 
         {{/if}}
-        <div class="width-35 h-full flex flex-col items-center pt-6 px-8 bg-slate-50">
+        <div class="place-order-sections width-35 h-full flex flex-col items-center pt-6 px-8 bg-slate-50">
             <div class="w-full h-48 bg-white rounded-sm flex flex-col px-4 py-3">
                 <h1 class="text-xs text-slate-400 border-b-2 border-slate-200 pb-2 font-medium" >PRICE DETAILS</h1>
                 <p class="text-xs mt-3 font-medium relative flex items-center" >Price (2 items) <span class="text-xs font-medium font-sans absolute right-2" >₹{{totalPrice}}</span></p>

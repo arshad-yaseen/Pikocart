@@ -4,24 +4,33 @@
 
     <div class="py-6 px-20 w-full flex flex-col float-left" >
 
-
-        <label for="text" class="block text-slate-700 text-xs font-medium mb-2 mt-0">Product short name</label>
-        <input class="text-xs font-medium bg-whit pr-16 pl-2 py-1 rounded-md ring-1 ring-offset-1 ring-slate-300" type="text" name="name">
-
-        <label for="text" class="block text-slate-700 text-xs font-medium mb-2 mt-3">Product name</label>
+        <label for="text" class="block text-slate-700 text-xs font-medium mb-2 mt-0">Product name</label>
         <input class="text-xs font-medium bg-whit pr-20 pl-2 py-1 rounded-md ring-1 ring-offset-1 ring-slate-300" type="text" name="description">
 
+         <label for="text" class="block text-slate-700 text-xs font-medium mb-2 mt-3">Product short name</label>
+        <input class="text-xs font-medium bg-whit pr-16 pl-2 py-1 rounded-md ring-1 ring-offset-1 ring-slate-300" type="text" name="name" maxlength="30">
+
         <label for="text" class="block text-slate-700 text-xs font-medium mb-2 mt-3">Product Category</label>
-        <input class="text-xs font-medium bg-whit pr-20 pl-2 py-1 rounded-md ring-1 ring-offset-1 ring-slate-300" type="text" name="category">
+        <select class="text-xs font-medium bg-whit pr-20 pl-2 py-1 rounded-md ring-1 ring-offset-1 ring-slate-300 cursor-pointer" type="text" name="category">
+            <option value="nothing">Select Category</option>
+            <option value="mobile">Mobile</option>
+            <option value="fashion">Fashion</option>
+            <option value="electronics">Electronics</option>
+            <option value="beauty">Beauty</option>
+            <option value="home">Home</option>
+            <option value="appliances">Appliances</option>
+            <option value="kids&toys">Kids&Toys</option>
+            <option value="watch">Watch</option>
+            <option value="laptop">Pc&Laptops</option>
+            <option value="sports">Sports</option>
+            <option value="shoe">Shoe</option>
+        </select>
 
         <label for="text" class="block text-slate-700 text-xs font-medium mb-2 mt-3">Original price</label>
         <input class="text-xs font-medium font-sans bg-whit pr-20 pl-2 py-1 rounded-md ring-1 ring-offset-1 ring-slate-300" type="text" name="maxprice">
 
         <label for="text" class="block text-slate-700 text-xs font-medium mb-2 mt-3">Deal price</label>
         <input class="text-xs font-medium font-sans bg-whit pr-20 pl-2 py-1 rounded-md ring-1 ring-offset-1 ring-slate-300" type="text" name="dealprice">
-
-        <label for="text" class="block text-slate-700 text-xs font-medium mb-2 mt-3">Keywords</label>
-        <input class="text-xs font-medium font-sans bg-whit pr-20 pl-2 py-1 rounded-md ring-1 ring-offset-1 ring-slate-300" type="text" name="keyword" placeholder="ex: headset, bluetooth headset, wireless headset">
 
         <label for="text" class="block text-slate-700 text-xs font-medium mb-2 mt-3">Discount persantage</label>
         <input class="text-xs font-medium font-sans bg-whit pr-20 pl-2 py-1 rounded-md ring-1 ring-offset-1 ring-slate-300" type="text" name="offerpers" placeholder="ex: 25">

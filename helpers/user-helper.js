@@ -3,7 +3,6 @@ var collections = require("../config/collections");
 var bcrypt = require("bcrypt");
 var ObjectId = require("mongodb").ObjectId;
 var Razorpay = require('razorpay');
-const { resolve } = require("path");
 
 var instance = new Razorpay({ key_id: 'rzp_test_y3s5vVhYBefajW', key_secret: 'ZdIYekK5qd5f5LC63zgWs8dL' })
 
@@ -232,10 +231,15 @@ module.exports = {
             },
           },
           {
+            $addFields: {
+               price: {$toInt: "$product.dealprice" } 
+            }
+          },
+          {
             $group: {
               _id: null,
               total: {
-                $sum: { $multiply: ["$quantity", "$product.dealprice"] },
+                $sum: { $multiply: ["$quantity", "$price"] },
               },
             },
           },
@@ -402,17 +406,50 @@ module.exports = {
   
   getAllProducts:()=> {
     return new Promise(async(resolve,reject)=> {
-     let products = await db.get().collection(collections.PRODUCTS_COLLECTION).find().toArray()
+     let products = await db.get().collection(collections.PRODUCTS_COLLECTION).aggregate([
+
+      {
+        $sample: { size: 1000000000000000 }
+      }
+
+     ]).toArray()
      resolve(products)
     })
   },
 
   getProductsByCategory:(productCategory)=> {
     return new Promise(async(resolve,reject)=> {
-      let products = await db.get().collection(collections.PRODUCTS_COLLECTION).find({category:productCategory}).toArray()
+      let products = await db.get().collection(collections.PRODUCTS_COLLECTION).aggregate([
+
+        {
+          $match: {category: productCategory}
+        },
+        {
+          $sample: { size: 4 }
+        }
+
+      ]).toArray()
       resolve(products)
     })
-  }
+  },
+
+  searchHistory:(searchValue)=> {
+    return new Promise(async(resolve,reject)=> {
+      await db.get().collection(collections.SEARCH_HISTORY_COLLECTION).insertOne(searchValue)
+      resolve()
+    })
+  },
+
+  getSearchHistory:(numbers)=> {
+    return new Promise(async(resolve,reject)=> {
+      let searchHistory = await db.get().collection(collections.SEARCH_HISTORY_COLLECTION).aggregate([
+        {
+          $sample: { size: numbers }
+        }
+      ]).toArray()
+      resolve(searchHistory)
+    })
+  },
 
 
 };

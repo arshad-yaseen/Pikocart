@@ -7,8 +7,8 @@
     }
 </style>
 
-<div class="cart-wrapper w-full height-91 flex lg:flex-row flex-col">
-    <section class="cart-section width-70 h-full flex flex-col items-center px-8 overflow-y-scroll overflow-x-hidden pb-4" >
+<div class="cart-wrapper w-full flex xl:flex-row flex-col">
+    <section class="cart-section width-70 xl:h-full flex flex-col items-center lg:px-8 overflow-y-scroll overflow-x-hidden pb-4" >
         <section class=" w-full border-b-2 border-slate-100 flex items-center relative py-3">
             <h1 class="text-xs ml-8 text-slate-800" >Shopping Cart</h1>
             <h1 class="text-xs absolute right-8 text-slate-800" >{{cartCount}} Items</h1>
@@ -19,10 +19,16 @@
         {{/if}}
         {{#each cartProducts}}
         <div class="cart-product-item min-height-22 mt-6 w-full  flex py-1 relative cursor-pointer ">
-            <div class="cart-image-wrapper h-full w-28 rounded-md ml-2 flex items-center justify-center ">
-                <img src="/product-images/{{this.product._id}}.webp" class="h-20 w-auto rounded-md">
+            <div class="cart-image-wrapper h-full w-28 rounded-md ml-2 flex items-center justify-center relative">
+                <div class="lg:hidden block" >
+                    <div class="h-4 w-4 bg-primary rounded-full absolute flex items-center justify-center top-0 left-3 small-text text-white">{{this.quantity}}</div>
+                </div>
+                <div class="lg:hidden block" >
+                    <p class=" absolute -bottom-8 right-0 font-sans text-xs">₹{{this.product.dealprice}}</p>
+                </div>
+                <img src="/product-images/{{this.product._id}}.webp" class="mt-6 lg:h-20 h-12 w-auto rounded-md">
             </div>
-            <div class="h-full w-64  flex flex-col">
+            <div class="h-full w-64  flex flex-col pr-8">
                 <h1 class="text-xs ml-6 mt-2 w-76 capitalize" >{{this.product.description}}</h1>
                 <p class="small-text mt-2 ml-6 w-44 capitalize text-slate-400" >color <span class="mr-2 small-text ml-1 text-slate-600" >{{this.product.color}}</span>
                 
@@ -36,9 +42,10 @@
                  </p>
                 <a onclick="deleteFromCart('{{this._id}}','{{this.product._id}}')" class="block small-text lowercase font-medium mt-2 text-red-500 hover:underline hover:text-red-500">remove</a>
             </div>
-            <div class="flex flex-col absolute right-0 w-28 h-full">
+           <div class="lg:block hidden">
+                <div class=" flex flex-col absolute right-0 w-24 h-full lg:bg-transparent bg-white">
                 <div class="w-full h-1/2 flex pt-2 justify-center">
-                     <h3 class="text-sm font-sans text-black" >₹{{this.product.dealprice}}</h3>
+                     <h3 class="lg:text-sm text-xs font-sans text-black" >₹{{this.product.dealprice}}</h3>
                 </div>
                 <div class="w-full h-1/2 flex items-start">
 
@@ -49,11 +56,12 @@
                 </form>
                 </div>
             </div>
+           </div>
            
         </div>
         {{/each}}
     </section>
-    <section class="width-30 h-full flex flex-col items-center border-l-2 border-slate-100" >
+    <section class="cart-section-2 width-30 xl:h-full flex flex-col items-center border-l-2 border-slate-100" >
         
         <div class="w-full h-24 flex flex-col justify-center px-16 items-center border-b-2 border-slate-100">
             <label for="text" class="text-xs mb-2" >Your Coupon Code</label>

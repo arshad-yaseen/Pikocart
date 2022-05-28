@@ -110,7 +110,13 @@ header .search-icon {
 }
 @media only screen and (max-width: 1024px) and (min-width: 350px) {
   .home-deals-section {
-    height: 450px;
+    height: 650px;
+  }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 350px) {
+  .place-order-sections {
+    width: 100% !important;
   }
 }
 
@@ -175,7 +181,10 @@ input[type="file"] {
   height: 640px;
   width: 380px;
 }
-
+.staff-login-wrapper{
+  height: 470px;
+  width: 380px;
+}
 .logout-1{
   margin-bottom: 20px;
 }
@@ -451,5 +460,21 @@ input[type="file"] {
   .left-column img {
     width: 220px;
     top: -85px;
+  }
+}
+
+.ellipse-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+}
+
+@media only screen and (max-width: 1280px) and (min-width: 350px) {
+  .cart-section {
+    width: 100% !important;
+  }
+  .cart-section-2 {
+    width: 100% !important;
   }
 }

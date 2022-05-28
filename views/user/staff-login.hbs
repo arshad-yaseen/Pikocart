@@ -1,0 +1,85 @@
+
+<style>
+    *{
+        font-size: unset;
+    }
+    header{
+        display: none !important;
+    }
+</style>
+
+<div
+  class="h-screen w-full flex flex-col items-center justify-center flex-wrap text-black leading-normal relative bg-white"
+>
+  <div
+    class="aurora-gradient-1 w-52 h-52 rounded-full bg-purple-100 absolute top-96 left-96 filter blur-3xl opacity-70"
+  ></div>
+  <div
+    class="aurora-gradient-2 w-72 h-72 rounded-full bg-cyan-100 absolute top-12 right-96 filter blur-3xl opacity-70"
+  ></div>
+  <div
+    class="staff-login-wrapper shadow-xl shadow-blue-50 rounded-lg flex flex-col items-center p-4 bg-white relative"
+  >
+
+  {{#if staffLoginErr}}
+
+    <div
+      id="errorMessageWrapper"
+      class="h-8 rounded-t-lg text-xs absolute w-full bg-red-50 -top-4"
+    >
+      
+      
+        <p class="font-semibold h-full w-full rounded-t-md flex justify-center items-center text-red-500" >
+        {{staffLoginErr}}
+        </p>
+
+    </div>
+
+  {{/if}}
+
+    <div class="heading-wrapper w-full h-24 flex items-center justify-center">
+      <h1 class="text-2xl capitalize font-bold">Staff Login</h1>
+    </div>
+    <div class="form-wrapper w-full h-76 flex flex-col items-center px-4">
+      <form action="/staff-login" method="post" class="flex flex-col items-center" id="StaffFormLogin">
+        <input
+          required
+          autocomplete="off"
+          type="email"
+          name="staff_email"
+          id="LoginStaffEmailInput"
+          placeholder="Enter email"
+          class="bg-slate-50 py-3 pr-28 pl-8 rounded-md placeholder:font-semibold text-sm mb-4 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-1"
+        />
+
+        <input
+          required
+          autocomplete="off"
+          type="password"
+          name="staff_code"
+          id="LoginstaffCodeInput"
+          placeholder="Enter staff code"
+          class="bg-slate-50 py-3 pr-28 pl-8 rounded-md placeholder:font-semibold text-sm mb-4 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-1"
+        />
+
+        <button
+          type="submit"
+          class="py-3 px-16 bg-blue-600 text-md text-white hover:bg-blue-500 rounded-lg mt-4"
+        >
+          Login
+        </button>
+
+      </form>
+    </div>
+    <div
+      class="footer-wrapper w-full h-28 absolute bottom-0 flex items-center justify-center"
+    >
+      <p class="text-sm font-medium">
+        Don't have a staff accound ?
+        <a href="/staff-signup"><span class="text-blue-500 cursor-pointer hover:text-blue-600 text-sm">
+          Signup
+        </span></a>
+      </p>
+    </div>
+  </div>
+</div>

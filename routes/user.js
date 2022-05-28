@@ -1,8 +1,11 @@
 var express = require('express');
-const { Db } = require('mongodb');
+const { Db, ObjectId } = require('mongodb');
 var router = express.Router();
 var productHelpers = require('../helpers/product-helper')
 var userHelpers = require('../helpers/user-helper')
+var StaffHelpers = require('../helpers/staff-helper')
+
+let staffCode = '9946'
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -11,23 +14,42 @@ router.get('/', async function(req, res, next) {
   if (req.session.user){
     cartCount = await userHelpers.getCartCount(req.session.user._id)
   }
-  productHelpers.getAllProducts().then((products)=> {
-    res.render('user/home-page', { products, user,cartCount});
+  let electronics = await userHelpers.getProductsByCategory('electronics')
+  let mobiles = await userHelpers.getProductsByCategory('mobile')
+  let laptops = await userHelpers.getProductsByCategory('laptop')
+  let home = await userHelpers.getProductsByCategory('home')
+
+  let searchHistory =  await userHelpers.getSearchHistory(13)
+
+  let staff = req.session.staff
+  let delivery_boy = req.session.staff_type == 'deliveryBoy'
+  
+  productHelpers.getSpecificNumberOfProducts(4).then((products)=> {
+    res.render('user/home-page', { products, user,cartCount,electronics,mobiles,laptops,home,searchHistory,staff,delivery_boy});
   })
 
 });
 
 // VERIFY IS USER LOGGED IN FUNCTION
 let verifyLogin=(req,res,next)=> {
-  if(req.session.loggedIn){
+  if(req.session.user){
     next()
   }else{
     res.redirect('/login')
   }
 }
 
+// VERIFY IS STAFF LOGGED IN FUNCTION
+let verifyStaffLogin=(req,res,next)=> {
+  if(req.session.staff){
+    next()
+  }else{
+    res.redirect('/staff-login')
+  }
+}
+
 router.get('/login', function(req, res, next){
-  if(req.session.loggedIn){
+  if(req.session.userLoggedIn){
     res.redirect('/')
   }else {
   res.render('user/login', {loginErr: req.session.loginErr})
@@ -39,19 +61,22 @@ router.get('/signup', function(req, res, next){
   res.render('user/signup')
 })
 router.get('/logout', function(req, res, next){
-  req.session.destroy()
+  req.session.user = null
+  req.session.userLoggedIn = false
   res.redirect('/')
 })
 
 router.post('/signup',(req, res)=> {
   userHelpers.doSignup(req.body).then((response)=> {
+    req.session.staff = null
     res.redirect('/')
   })
 })
 router.post('/login',(req, res)=> {
   userHelpers.doLogin(req.body).then((response)=> {
-    req.session.loggedIn = true
+    req.session.userLoggedIn = true
     req.session.user = response
+    req.session.staff = null
       res.redirect('/')
   }).catch((err)=> {
     req.session.loginErr = err
@@ -68,8 +93,6 @@ router.get('/cart',verifyLogin,async(req,res)=>{
   }
 
   let isCartItemsZero = cartProducts.length == 0
-
-  console.log(isCartItemsZero);
 
   let cartCount = null
   if (req.session.user){
@@ -201,8 +224,109 @@ router.get('/products/:category',async(req,res)=> {
   }else{
     products = await userHelpers.getProductsByCategory(req.params.category)
   }
-  res.render('user/products',{products,user,cartCount})
+
+  let staff = req.session.staff
+  let delivery_boy = req.session.staff_type == 'deliveryBoy'
+  
+  res.render('user/products',{products,user,cartCount,staff,delivery_boy})
 })
 
+router.get('/search',async (req,res)=> {
+
+  userHelpers.searchHistory(req.query)
+
+  var firstWord = 'nothing';
+  var SecondWord = 'nothing';
+
+  if(req.query.search.split(' ')[0]){
+    firstWord = req.query.search.split(' ')[0]
+  }
+  if(req.query.search.split(' ')[1]){
+    SecondWord = req.query.search.split(' ')[1]
+  }
+  
+  let searchProducts = await productHelpers.getProductsByWords(firstWord,SecondWord)
+
+  var products = [];
+  
+  if(searchProducts.productsBySecondWord){
+     products = searchProducts.productsByFirstWord.concat(searchProducts.productsBySecondWord)
+  }else{
+     products = searchProducts.productsByFirstWord
+  }
+
+  let staff = req.session.staff
+  let delivery_boy = req.session.staff_type == 'deliveryBoy'
+
+  res.render('user/search-product',{products,staff,delivery_boy})
+
+})
+
+router.get('/staff-signup',(req,res)=> {
+  if(req.session.staff){
+    if(req.session.staff_type == 'normal'){
+      res.redirect('/admin')
+    }else{
+      res.redirect('/delivery-manage-panel')
+    }
+  }else{
+    res.render('user/staff-signup',{staffSignupErr:req.session.staffSignupErr})
+    req.session.staffSignupErr = false
+  }
+})
+router.post('/staff-signup',async(req,res)=> {
+  StaffHelpers.doStaffSignup(req.body).then((response)=> {
+    StaffHelpers.getStaff(response).then((response)=> {
+      if(response.staff_code == staffCode){
+        if(response.staff_type == 'normal') {
+          req.session.staff = response
+          req.session.staff_type = 'normal'
+          req.session.user = null
+          res.redirect('/admin')
+        }else{
+          req.session.staff = response
+          req.session.staff_type = 'deliveryBoy'
+          req.session.user = null
+          res.redirect('/delivery-manage-panel')
+        }
+      }else{
+        req.session.staffSignupErr = 'Incorrect staff code'
+        res.redirect('/staff-signup')
+      }
+    })
+  })
+})
+
+router.get('/staff-logout',(req,res)=> {
+  req.session.staff = null
+  res.redirect('/')
+})
+
+router.get('/staff-login',(req,res)=> {
+  res.render('user/staff-login',{staffLoginErr:req.session.staffLoginErr})
+  req.session.staffLoginErr = false
+})
+
+router.post('/staff-login',(req,res)=> {
+  StaffHelpers.doLogin(req.body,staffCode).then((response)=> {
+    console.log(response);
+    req.session.staff = response
+    req.session.user = null
+    if(response.staff_type == 'normal'){
+      req.session.staff_type = 'normal'
+    }else{
+      req.session.staff_type = 'deliveryBoy'
+    }
+      res.redirect('/')
+  }).catch((err)=> {
+    req.session.staffLoginErr = err
+    res.redirect('/staff-login')
+  })
+})
+
+
+router.get('/delivery-manage-panel',(req,res)=> {
+  res.send('Manage your Orders')
+})
 
 module.exports = router;

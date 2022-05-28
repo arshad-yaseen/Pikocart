@@ -12,30 +12,32 @@
       <div class="aurora-gradient-1 w-52 h-52 rounded-full bg-purple-100 absolute top-96 left-96 filter blur-3xl opacity-70"></div>
       <div class="aurora-gradient-2 w-72 h-72 rounded-full bg-cyan-100 absolute top-12 right-96 filter blur-3xl opacity-70"></div>
       <div class="signup-wrapper shadow-xl shadow-blue-50 rounded-lg flex flex-col items-center p-4 bg-white relative">
+        {{#if staffSignupErr}}
       <div
         id="errorMessageWrapper"
-        class="h-8 rounded-t-lg text-xs absolute w-full bg-red-50 -top-4 hidden"
+        class="h-8 rounded-t-lg text-xs absolute w-full bg-red-50 -top-4"
       >
-        <p id="errorMessage" class="font-semibold h-full w-full rounded-t-md flex justify-center items-center">
-          error not allowed
+        <p id="errorMessage" class="text-red-500 font-semibold h-full w-full rounded-t-md flex justify-center items-center">
+          {{staffSignupErr}}
         </p>
       </div>
+      {{/if}}
         <div class="heading-wrapper w-full h-24 flex items-center justify-center">
-          <h1 class="text-3xl capitalize font-bold">Signup</h1>
+          <h1 class="text-2xl capitalize font-bold">Become a Staff</h1>
         </div>
         <div class="form-wrapper w-full h-76 flex flex-col items-center px-4">
           <form
-            action="/signup"
+            action="/staff-signup"
             class="flex flex-col items-center"
             method="post"
-            id="formRegister"
+            id="formStaffRegister"
           >
             <input
               required
               autocomplete="off"
               type="text"
-              name="Name"
-              id="nameInput"
+              name="staff_name"
+              id="staffNameInput"
               placeholder="Enter your name"
               class="bg-slate-50 py-3 pr-28 pl-8 rounded-md placeholder:font-semibold text-sm mb-4 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-1 "
             />
@@ -43,8 +45,8 @@
               required
               autocomplete="off"
               type="email"
-              name="Email"
-              id="emailInput"
+              name="staff_email"
+              id="staffEmailInput"
               placeholder="Enter email"
               class="bg-slate-50 py-3 pr-28 pl-8 rounded-md placeholder:font-semibold text-sm mb-4 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-1 "
             />
@@ -53,11 +55,23 @@
               required
               autocomplete="off"
               type="password"
-              name="Password"
-              id="passwordInput"
-              placeholder="Enter password"
+              name="staff_code"
+              id="staffCodeInput"
+              placeholder="Enter staff code"
               class="bg-slate-50 py-3 pr-28 pl-8 rounded-md placeholder:font-semibold text-sm mb-4 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-1 "
             />
+            <select
+              required
+              name="staff_type"
+              id="staffTypeOptions"
+              class="cursor-pointer bg-slate-50 py-3 w-full pl-6 pr-8 rounded-md placeholder:font-semibold text-sm mb-4 hover:bg-slate-100 focus:outline-none mt-1 appearance-none"
+            >
+            
+         
+            <option value="normal">Normal Staff</option>
+            <option value="deliveryboy">Delivery Boy</option>
+
+            </select>
 
             <button
               type="submit"
@@ -67,31 +81,11 @@
             </button>
 
 
-            <p class="mt-4 text-slate-200 font-medium">------------- <span class="text-slate-700 font-medium">or</span> -------------</p>
-          </form>
-        </div>
-        <div
-          class="extra-wrapper w-full flex h-20 items-center justify-center
-         pl-8"
-        >
-          <div class="social-logos-wrapper flex">
-            <img
-              src="../../Images/googlelogo.png"
-              alt=""
-              class="h-8 w-auto mr-8 cursor-pointer"
-              id="signUpGoogleLogo"
-            />
-            <img
-              src="../../Images/call.png"
-              alt=""
-              class="h-8 w-auto mr-8 cursor-pointer"
-            />
-          </div>
-        </div>
+            
         <div class="footer-wrapper w-full h-28 absolute bottom-0 flex items-center justify-center">
           <p class="text-sm font-medium">
-            Already have an accound ?
-            <a href="/login"><span
+            Already have a staff accound ?
+            <a href="/staff-login"><span
               class="text-blue-500 cursor-pointer hover:text-blue-600 text-sm"
             >
               Login
