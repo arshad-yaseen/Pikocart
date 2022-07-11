@@ -1,0 +1,52 @@
+<style>
+    .categories-section{
+        display: none !important;
+    }
+    .header-search{
+        display: none !important;
+    }
+    .navitem{
+        display: none;
+    }
+</style>
+
+<section class="flex items-center justify-center w-full height-9 mb-2" >
+    <form action="/verify-delivery" method="post">
+    <input type="text" name="orderId" class="text-xs bg-white border-2 border-slate-300 rounded-lg py-1 pl-4 placeholder:font-medium placeholder:text-slate-300 focus:outline-none" placeholder="order id"> 
+    <button type="submit" class="text-xs border-2 border-green-500 text-green-500 py-1 px-3 hover:bg-green-500 hover:text-white transition-colors rounded-lg">Delivered</button>
+    </form>
+</section>
+
+<section class="height-82 bg-slate-50 w-full flex flex-wrap overflow-y-scroll overflow-x-hidden justify-center pt-2" >
+
+    {{#each orders}}
+
+    <div class="height-280-px width-300-px bg-white rounded-lg mx-2 my-2 cursor-pointer hover:scale-105 transition-transform shadow-md flex flex-col">
+        <div class="h-8 w-full border-b-2 border-slate-100 flex items-center justify-between px-3">
+            <h6 class="small-text uppercase" >{{this.date}} | {{this.time}}</h6>
+            <span class="small-text capitalize" >{{this.deliveryDetails.state}}</span>
+        </div>
+        <div class="h-8 w-full flex justify-between px-3">
+            <span class="text-xs my-2 capitalize" >{{this.deliveryDetails.name}}</span>
+            <span class="text-xs my-2 text-fourth font-semibold font-sans" >₹{{this.totalAmount}}</span>
+        </div>
+        <div class="h-8 w-full flex justify-between px-3 border-b-2 border-slate-100">
+            <span class="text-xs my-1 text-slate-400 capitalize" >{{this.products.length}} Products</span>
+            <span class="small-text my-1 uppercase" >{{this.deliveryDetails.paymentmethod}}</span>
+        </div>
+        <div class="h-8 w-full flex justify-between px-3">
+            <span class="small-text my-2" >{{this.deliveryDetails.city}} - {{this.deliveryDetails.pincode}}...</span>
+        </div>
+        <div class="h-8 w-full flex justify-between px-3">
+            <a href="/delivery-manage-panel/order/{{this._id}}" class="text-white bg-blue-500 w-full rounded-md hover:bg-blue-600 flex items-center justify-center h-6 mt-2.5" >Pick this order</a>
+        </div>
+    </div>
+
+    {{/each}}
+
+</section>
+
+<script>
+    document.getElementById('brandName').innerText='Delivery Panel'
+    document.getElementById('brandName').style.fontSize='22px'
+</script>

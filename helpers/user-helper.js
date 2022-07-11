@@ -257,7 +257,20 @@ module.exports = {
       var day = dateObj.getUTCDate();
       var year = dateObj.getUTCFullYear();
 
-      newdate = year + "/" + month + "/" + day;
+      newdate = year + "." + month + "." + day;
+
+      function formatAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+      }
+      
+      let time = formatAMPM(new Date);
 
       let orderObj = {
         deliveryDetails: {
@@ -277,6 +290,9 @@ module.exports = {
         totalAmount: total,
         status: status,
         date: newdate,
+        time: time,
+        orderTrack: 'order processed'
+
       };
 
       db.get()
@@ -450,6 +466,34 @@ module.exports = {
       resolve(searchHistory)
     })
   },
+
+  allOrdersByState:(staffState)=> {
+    return new Promise(async(resolve,reject)=> {
+      let orders = await db.get().collection(collections.ORDER_COLLECTION).find({'deliveryDetails.state':staffState,orderTrack:'order processed'}).toArray()
+      resolve(orders)
+    })
+  },
+
+  getOrderById:(orderId)=> {
+    return new Promise(async(resolve,reject)=> {
+      let order = await db.get().collection(collections.ORDER_COLLECTION).findOne({_id:ObjectId(orderId)})
+      resolve(order)
+    })
+  },
+
+  updateOrderTrack:(orderId,orderTrackName)=> {
+    return new Promise(async(resolve,reject)=> {
+      console.log(orderTrackName);
+      await db.get().collection(collections.ORDER_COLLECTION).update(
+        {_id:ObjectId(orderId)},
+        {
+          $set:{orderTrack: orderTrackName}
+        }
+
+        )
+        resolve()
+    })
+  }
 
 
 };

@@ -50,6 +50,20 @@ Handlebars.registerHelper("inc", function(value, options)
     return parseInt(value) + 1;
 });
 
+// CHECK ORDERTRACK IS EQUAL TO SHIPPED
+Handlebars.registerHelper('ifCond', function(orderTrack, shipped, options) {
+  if(orderTrack == shipped ) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+Handlebars.registerHelper('ifCond', function(orderTrack, delivered, options) {
+  if(orderTrack == delivered ) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

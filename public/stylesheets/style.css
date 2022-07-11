@@ -178,7 +178,7 @@ input[type="file"] {
 }
 
 .signup-wrapper {
-  height: 640px;
+  height: 680px;
   width: 380px;
 }
 .staff-login-wrapper{
@@ -477,4 +477,41 @@ input[type="file"] {
   .cart-section-2 {
     width: 100% !important;
   }
+}
+
+/* ORDER FULL VIEW DESIGN */
+
+.card {
+  box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+}
+.text-reset {
+  --bs-text-opacity: 1;
+  color: inherit!important;
+}
+@media print {
+  .noprint{
+    display: none !important;
+  }
+}
+
+/* STYLE FOR PRINT IN A4 SIZE */
+
+@page {
+  /* dimensions for the whole page */
+  size: A5;
+  
+  margin: 0;
+}
+.order-products a{
+  font-size: 20px !important;
 }

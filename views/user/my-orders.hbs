@@ -44,9 +44,27 @@ Products
 <th scope="row" class="px-6 py-4 capitalize font-medium text-gray-900 :text-white whitespace-nowrap">
 {{this.date}}
 </th>
-<td class="pl-6 py-4 capitalize text-yellow-500">
-On the way
+{{#ifCond this.orderTrack 'Order Shipped'}}
+    <td class="pl-6 py-4 capitalize text-green-500">
+{{this.orderTrack}}
 </td>
+{{else}}
+
+{{#ifCond this.orderTrack 'Order Delivered'}}
+   <td class="pl-6 py-4 capitalize text-blue-500">
+{{this.orderTrack}}
+</td>
+
+{{else}}
+
+   <td class="pl-6 py-4 capitalize text-yellow-500">
+{{this.orderTrack}}
+</td>
+
+{{/ifCond}}
+
+{{/ifCond}}
+
 <td class="px-6 py-4 capitalize">
 {{this.products.length}} Products
 </td>

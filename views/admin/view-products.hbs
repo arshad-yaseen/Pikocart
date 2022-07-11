@@ -8,20 +8,19 @@
     .dataTables_length{
         margin-right: 80px;
         margin-left: 20px;
-        margin-top: 50px;
+        margin-top: 10px;
         margin-bottom: 20px;
     }
     .dataTables_filter {
         margin-right: 20px;
         margin-left: 80px;
-        margin-top: 50px;
-        margin-bottom: 20px;
+        margin-top: 20px;
     }
     .dataTables_filter label input{
         outline: none;
         border: 1px solid rgba(128, 128, 128, 0.299) !important;
         margin-left: 10px !important;
-        border-radius: 7px !important;
+        border-radius: 4px !important;
     }
     .dataTables_length label select{
         border: none !important;
@@ -104,9 +103,9 @@ Modify
 <img class="h-8 w-auto" src="/product-images/{{this._id}}.webp" alt="">
 </td>
 <td class=" py-4">
-<a href="/admin/edit-product/{{this._id}}" class="font-medium mr-4 py-1 px-3 bg-primary text-white rounded-sm" >Edit</a>
+<a href="/admin/edit-product/{{this._id}}" class="font-medium mr-4 py-1 px-3 border-2 border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white">Edit</a>
 
-<a href="/admin/delete-product/{{this._id}}" class="font-medium py-1 px-3 bg-red-600 text-white rounded-sm" onclick="return confirm('Are you sure you want to delete {{this.name}} ?');">Delete</a>
+<a href="/admin/delete-product/{{this._id}}" class="font-medium py-1 px-3 border-2 border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white" onclick="return confirm('Are you sure you want to delete {{this.name}} ?');">Delete</a>
 </td>
 </tr>
 

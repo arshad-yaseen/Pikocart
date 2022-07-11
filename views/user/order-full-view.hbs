@@ -1,0 +1,94 @@
+<style>
+    *{
+        font-size: 1.1rem !important;
+    }
+    header{
+        display: none !important;
+    }
+</style>
+
+<section class="order-products" >
+
+<div class="container-fluid">
+
+<div class="container mt-8 ">
+  <!-- Title -->
+
+  <!-- Main content -->
+  <div class="row">
+    <div class="col-lg-8">
+      <!-- Details -->
+      <div class="card mb-4 w-full">
+        <div class="card-body">
+          <div class="mb-3 d-flex justify-content-between">
+            <div>
+              <h2 class="h5 mb-3"><a href="#" class="text-muted"></a>Order #{{order._id}}</h2>
+              <span class="me-3">{{order.date}}</span>
+              <span class="me-3">| {{order.time}}</span> <br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Payment -->
+      <div class="card mb-4 w-full">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6 mb-6">
+              <h3 class="h6">Payment Method</h3>
+              <p class="font-sans -mb-6" >
+              <span class="small-text text-primary  ">{{order.deliveryDetails.paymentmethod}}</span></p> <br>
+              <span class="small-text text-primary text-black font-sans">{{order.products.length}} Products</span></span></p> <br>
+              <span class="small-text text-primary text-black font-sans">Total <span class="font-bold font-sans" >₹{{order.totalAmount}}</span></span></p>
+              <button onclick="window.print()" class="noprint mt-3 border-2 border-blue-600 text-blue-600  py-1 px-4 rounded-lg hover:text-white hover:bg-blue-600 font-medium mr-3 transition-colors" >Print</button>
+              <a href="/ship-order/{{order._id}}" class="noprint mt-3 bg-fourth py-1 px-4 rounded-lg text-white font-medium transition-transform hover:scale-105" >Ship Order</a>
+            </div>
+            <div class="col-lg-6">
+              <h3 class="h6 text-slate-400">Billing address</h3>
+              <address class="leading-loose pr-6" >
+               {{order.deliveryDetails.address}}, {{order.deliveryDetails.landmark}} |  {{order.deliveryDetails.city}} - {{order.deliveryDetails.pincode}} <br> {{order.deliveryDetails.state}} - India <br> Mobile: {{order.deliveryDetails.mobile}}
+              </address>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</section>
+
+<section
+  class="height-91 w-full flex flex-wrap pl-20 bg-slate-50 overflow-y-scroll noprint"
+>
+  
+  {{#each orderProducts}}
+
+    <div class="today-deals-card height-70  m-2 w-80 rounded-sm bg-white flex flex-col cursor-pointer">
+      <div class="w-full height-55 flex items-center justify-center rounded-t-sm relative">
+          <img class="max-h-24 absolute" src="/product-images/{{this.product._id}}.webp" alt="">
+      </div>
+      <div class="w-full height-45 flex flex-col rounded-t-sm pl-6 pr-6 relative">
+        <h1 class="text-xs font-medium" >{{this.product.name}}... </h1>
+
+    <span class="small-text mt-2 mb-1 leading-loose" ><span class="small-text" >Color -</span> {{this.product.color}}  <span class="ml-3 small-text uppercase" ></span>
+    
+    {{#if this.product.size}}
+      <span class="small-text capitalize" >Size -</span> {{this.product.size}}
+    {{/if}}
+    
+    
+    </span></span>
+
+    <p class="text-xs mb-4 mt-2 text-primary" >Quantity - {{this.quantity}}</p>
+
+        <p class=" text-xs font-sans mt-1 mb-6" >
+₹{{this.product.dealprice}}  <span class="text-xs mt-4 text-slate-400 font-sans line-through" >
+₹{{this.product.maxprice}}</span></p>
+
+      </div>
+  </div>
+
+    {{/each}}
+
+
+</section>

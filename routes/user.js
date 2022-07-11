@@ -49,7 +49,7 @@ let verifyStaffLogin=(req,res,next)=> {
 }
 
 router.get('/login', function(req, res, next){
-  if(req.session.userLoggedIn){
+  if(req.session.user){
     res.redirect('/')
   }else {
   res.render('user/login', {loginErr: req.session.loginErr})
@@ -166,7 +166,6 @@ router.get('/order-placed',async(req,res)=> {
   let COD = true
   if(req.session.order){
     COD = req.session.order.status == 'placed'
-    console.log(req.session.order);
   }
 
   let user = req.session.user
@@ -309,7 +308,6 @@ router.get('/staff-login',(req,res)=> {
 
 router.post('/staff-login',(req,res)=> {
   StaffHelpers.doLogin(req.body,staffCode).then((response)=> {
-    console.log(response);
     req.session.staff = response
     req.session.user = null
     if(response.staff_type == 'normal'){
@@ -325,8 +323,31 @@ router.post('/staff-login',(req,res)=> {
 })
 
 
-router.get('/delivery-manage-panel',(req,res)=> {
-  res.send('Manage your Orders')
+router.get('/delivery-manage-panel',verifyStaffLogin,async(req,res)=> {
+
+  let staff = req.session.staff
+  let delivery_boy = req.session.staff_type == 'deliveryBoy'
+
+  let orders = await userHelpers.allOrdersByState(staff.staff_state)
+
+
+  res.render('user/delivery-panel',{staff,delivery_boy,orders})
+})
+
+router.get('/delivery-manage-panel/order/:id',async(req,res)=> {
+  let order = await userHelpers.getOrderById(req.params.id)
+  let orderProducts = await userHelpers.getOrderProducts(req.params.id)
+  res.render('user/order-full-view',{order,orderProducts})
+})
+
+router.get('/ship-order/:id',async (req,res)=> {
+  await userHelpers.updateOrderTrack(req.params.id,'Order Shipped')
+  res.redirect('/delivery-manage-panel')
+})
+
+router.post('/verify-delivery',async(req,res)=> {
+  await userHelpers.updateOrderTrack(req.body.orderId,'Order Delivered')
+  res.redirect('/delivery-manage-panel')
 })
 
 module.exports = router;
