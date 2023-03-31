@@ -4,7 +4,7 @@ var bcrypt = require("bcrypt");
 var ObjectId = require("mongodb").ObjectId;
 var Razorpay = require('razorpay');
 
-var instance = new Razorpay({ key_id: 'rzp_test_y3s5vVhYBefajW', key_secret: 'ZdIYekK5qd5f5LC63zgWs8dL' })
+var instance = new Razorpay({ key_id: 'rzp_test_vxMyTGmousQBNS', key_secret: 'AQKxDQ6IJwJG44WUHVuo8u9K' })
 
 module.exports = {
   doSignup: (userData) => {

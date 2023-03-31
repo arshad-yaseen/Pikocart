@@ -6,7 +6,7 @@ const state = {
 
 module.exports.connect=function(done){
 
-    let url = 'mongodb://localhost:27017'
+    let url = 'mongodb+srv://arshadyaseen:nk3B7pJ6vmnFsIZY@cluster0.o26x8dy.mongodb.net/?retryWrites=true&w=majority'
     let dbname = 'Pikocart'
 
     mongoClient.connect(url, (err, data)=> {
